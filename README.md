@@ -9,7 +9,7 @@
 ╚═╝     ╚═╝╚═╝  ╚═╝╚═╝  ╚═══╝╚══════╝ ╚═════╝ ╚═╝  ╚═╝
 ```
 
-**I am a 17-year-old self-taught developer from Almaty, Kazakhstan**
+**Developer · 17 · Almaty, Kazakhstan**
 
 focused on building real products that solve real problems.
 
