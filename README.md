@@ -9,8 +9,9 @@
 ╚═╝     ╚═╝╚═╝  ╚═╝╚═╝  ╚═══╝╚══════╝ ╚═════╝ ╚═╝  ╚═╝
 ```
 
-### 17yo developer from Almaty, Kazakhstan 🇰🇿
-### Building AI-powered tools. Shipping real products. Learning in public.
+**Developer · Almaty, Kazakhstan**
+
+Building AI-powered tools and shipping real products.
 
 [![LinkedIn](https://img.shields.io/badge/LinkedIn-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white)](https://linkedin.com/in/manss-zhiger-63b634324)
 [![CodeVault](https://img.shields.io/badge/CodeVault-Live-brightgreen?style=for-the-badge)](https://codevault-production-86f2.up.railway.app)
@@ -19,23 +20,34 @@
 
 ---
 
-## 🚀 What I'm Building
+## About
 
-### [CodeVault](https://codevault-production-86f2.up.railway.app) — Your Personal Code Library
-> A code snippet manager where developers save, organize, and explore code with syntax highlighting and instant search.
-> Built with **PHP + Supabase + Railway**. AI-powered search coming soon via the Anthropic API.
+I am a self-taught developer from Almaty, Kazakhstan, focused on building real products that solve real problems. Currently in high school, I spend most of my time writing code, learning how modern AI systems work, and shipping things publicly.
 
----
-
-## 🧠 What I'm Into
-
-- **AI & Machine Learning** — exploring how LLMs work and building on top of them
-- **Shipping real products** — not just tutorials, actual deployed apps people can use
-- **Learning in public** — documenting everything on LinkedIn
+My long-term goal is to study Machine Learning and Deep Learning at university level while continuing to build independently.
 
 ---
 
-## 🛠️ Tech Stack
+## Current Project
+
+**[CodeVault](https://codevault-production-86f2.up.railway.app)** — A code snippet manager for developers.
+
+Save, organize, and explore code snippets with syntax highlighting and instant search. Built from scratch and deployed to production.
+
+- Stack: PHP, Supabase, PostgreSQL, Railway
+- Next: AI-powered search and smart auto-tagging via the Anthropic API
+
+---
+
+## Interests
+
+- Artificial Intelligence and Machine Learning
+- Building and deploying production-grade web applications
+- Learning in public and documenting the process
+
+---
+
+## Tech Stack
 
 ![PHP](https://img.shields.io/badge/PHP-777BB4?style=flat-square&logo=php&logoColor=white)
 ![Supabase](https://img.shields.io/badge/Supabase-3ECF8E?style=flat-square&logo=supabase&logoColor=white)
@@ -47,31 +59,19 @@
 
 ---
 
-## 📌 Goals for 2025
+## Goals — 2025
 
-- [ ] Add AI-powered search & auto-tagging to CodeVault
-- [ ] Get accepted into an ML/Deep Learning university program
-- [ ] Build and ship 2 more real products
-- [ ] Grow to 500 LinkedIn followers documenting my journey
+- [ ] Ship AI-powered search and auto-tagging in CodeVault
+- [ ] Apply and get accepted into an ML/Deep Learning university program
+- [ ] Build and release two additional products
+- [ ] Document the full journey publicly on LinkedIn
 
 ---
-
-## 📊 GitHub Stats
 
 <div align="center">
 
 ![Mansur's GitHub Stats](https://github-readme-stats.vercel.app/api?username=IManss-ai&show_icons=true&theme=tokyonight&hide_border=true)
 
 ![Top Languages](https://github-readme-stats.vercel.app/api/top-langs/?username=IManss-ai&layout=compact&theme=tokyonight&hide_border=true)
-
-</div>
-
----
-
-<div align="center">
-
-*"Always building. Always learning."*
-
-⭐ If you find my projects useful, consider giving them a star!
 
 </div>
