@@ -9,9 +9,9 @@
 ╚═╝     ╚═╝╚═╝  ╚═╝╚═╝  ╚═══╝╚══════╝ ╚═════╝ ╚═╝  ╚═╝
 ```
 
-**I am a 17-year-old self-taught developer from Almaty, Kazakhstan, focused on building real products that solve real problems.**
+**I am a 17-year-old self-taught developer from Almaty, Kazakhstan**
 
-Building AI-powered tools and shipping real products.
+focused on building real products that solve real problems.
 
 [![LinkedIn](https://img.shields.io/badge/LinkedIn-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white)](https://linkedin.com/in/manss-zhiger-63b634324)
 [![CodeVault](https://img.shields.io/badge/CodeVault-Live-brightgreen?style=for-the-badge)](https://codevault-production-86f2.up.railway.app)
