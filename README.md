@@ -30,12 +30,12 @@ My long-term goal is to study Machine Learning and Deep Learning at university l
 
 ## Current Project
 
-**[CodeVault](https://codevault-production-86f2.up.railway.app)** — A code snippet manager for developers.
+Current Project
+VibeScan — A security scanner for AI-generated code.
+Developers are shipping vibe-coded apps with critical security holes they don't even know exist. VibeScan scans your code for the specific failure patterns Claude, Cursor and Copilot introduce and gives you plain English fixes. Built after 2 weeks of market research across 80+ sources.
 
-Save, organize, and explore code snippets with syntax highlighting and instant search. Built from scratch and deployed to production.
-
-- Stack: PHP, Supabase, PostgreSQL, Railway
-- Next: AI-powered search and smart auto-tagging via the Anthropic API
+Stack: Next.js, TypeScript, Supabase, Vercel
+Status: Live and collecting early access signups
 
 ---
 
