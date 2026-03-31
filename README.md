@@ -30,13 +30,12 @@ My long-term goal is to study Machine Learning and Deep Learning at university l
 
 ## Current Project
 
-Current Project
-VibeScan — A security scanner for AI-generated code.
+[VibeScan](https://vibescan-mu.vercel.app) — A security scanner for AI-generated code.
+
 Developers are shipping vibe-coded apps with critical security holes they don't even know exist. VibeScan scans your code for the specific failure patterns Claude, Cursor and Copilot introduce and gives you plain English fixes. Built after 2 weeks of market research across 80+ sources.
 
-Stack: Next.js, TypeScript, Supabase, Vercel
-Status: Live and collecting early access signups
-
+- Stack: Next.js, TypeScript, Supabase, Vercel
+- Status: Live and collecting early access signups
 ---
 
 ## Interests
