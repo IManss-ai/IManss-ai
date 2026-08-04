@@ -5,8 +5,8 @@ on:
     - cron: "17 3 * * *"
   workflow_dispatch:
     inputs:
-      backfill_2026:
-        description: "Create one dated commit per day from Jan 1 through Aug 4, 2026"
+      naturalize_2026:
+        description: "Create varied activity from Jan 1 through Aug 5, 2026"
         required: true
         default: false
         type: boolean
@@ -39,29 +39,21 @@ jobs:
           git config user.name "IManss-ai"
           git config user.email "254088976+IManss-ai@users.noreply.github.com"
 
-      - name: Backfill 2026 counter history
-        if: ${{ github.event_name == 'workflow_dispatch' && inputs.backfill_2026 == true }}
+      - name: Create varied 2026 history
+        if: ${{ github.event_name == 'workflow_dispatch' && inputs.naturalize_2026 == true }}
         shell: bash
         run: |
-          python scripts/backfill_counter.py \
+          python scripts/generate_activity.py \
             --start-date 2026-01-01 \
-            --end-date 2026-08-04
+            --end-date 2026-08-05
           git push
 
-      - name: Increment daily counter
-        if: ${{ github.event_name != 'workflow_dispatch' || inputs.backfill_2026 != true }}
-        run: python scripts/update_counter.py
-
-      - name: Commit and push daily update
-        if: ${{ github.event_name != 'workflow_dispatch' || inputs.backfill_2026 != true }}
+      - name: Create today's varied activity
+        if: ${{ github.event_name != 'workflow_dispatch' || inputs.naturalize_2026 != true }}
         shell: bash
         run: |
-          git add counter.txt
-
-          if git diff --cached --quiet; then
-            echo "No counter change to commit."
-            exit 0
-          fi
-
-          git commit -m "chore: update daily counter"
+          TODAY=$(TZ=Asia/Qyzylorda date +%F)
+          python scripts/generate_activity.py \
+            --start-date "$TODAY" \
+            --end-date "$TODAY"
           git push
