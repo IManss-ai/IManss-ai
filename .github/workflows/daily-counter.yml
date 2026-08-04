@@ -6,7 +6,7 @@ on:
   workflow_dispatch:
     inputs:
       naturalize_2026:
-        description: "Spread random brightness from Jan 1 through Aug 5, 2026"
+        description: "Spread random brightness across all of 2026"
         required: true
         default: false
         type: boolean
@@ -47,7 +47,7 @@ jobs:
         run: |
           python scripts/generate_activity.py \
             --start-date 2026-01-01 \
-            --end-date 2026-08-05 \
+            --end-date 2026-12-31 \
             --push-every 400
 
       - name: Create today's varied activity
