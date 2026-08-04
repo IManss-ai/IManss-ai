@@ -38,6 +38,8 @@ jobs:
         run: |
           git config user.name "IManss-ai"
           git config user.email "254088976+IManss-ai@users.noreply.github.com"
+          git config gc.auto 0
+          git config maintenance.auto false
 
       - name: Create varied 2026 history
         if: ${{ github.event_name == 'workflow_dispatch' && inputs.naturalize_2026 == true }}
