@@ -49,6 +49,13 @@ jobs:
             --start-date 2026-01-01 \
             --end-date 2026-12-31 \
             --push-every 400
+          python scripts/backfill_counter.py \
+            --start-date 2026-09-15 \
+            --end-date 2026-09-21
+          python scripts/backfill_counter.py \
+            --start-date 2026-11-08 \
+            --end-date 2026-11-15
+          git push
 
       - name: Create today's varied activity
         if: ${{ github.event_name != 'workflow_dispatch' || inputs.naturalize_2026 != true }}
