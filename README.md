@@ -1,10 +1,10 @@
-# Manss Zhiger
+# Mansur Zhiger
 
 **Indie founder and full-stack developer building AI products from Almaty, Kazakhstan.**
 
 I take products from an empty repo to production: research, product design, frontend, backend, data pipelines, billing, and deployment. I am 17, still in high school, and currently focused on turning useful software into sustainable businesses.
 
-[**Rivalscope**](https://rivalscope.dev) · [LinkedIn](https://www.linkedin.com/in/manss-zhiger-63b634324) · [X](https://x.com/Manss_dev)
+[**Rivalscope**](https://rivalscope.dev) · [LinkedIn](https://www.linkedin.com/in/mansur-zhiger/) · [X](https://x.com/Manss_dev)
 
 ## Currently building
 
@@ -38,4 +38,4 @@ I take products from an empty repo to production: research, product design, fron
 
 I am especially interested in machine learning, product research, and software for markets that large companies overlook. Right now, that means competitive intelligence and Kazakhstan-first products.
 
-If you are building in AI or SaaS, reach me on [LinkedIn](https://www.linkedin.com/in/manss-zhiger-63b634324) or [X](https://x.com/Manss_dev).
+If you are building in AI or SaaS, reach me on [LinkedIn](https://www.linkedin.com/in/mansur-zhiger/) or [X](https://x.com/Manss_dev).
