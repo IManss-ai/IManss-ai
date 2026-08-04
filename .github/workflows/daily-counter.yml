@@ -1,0 +1,67 @@
+name: Daily counter
+
+on:
+  schedule:
+    - cron: "17 3 * * *"
+  workflow_dispatch:
+    inputs:
+      backfill_2026:
+        description: "Create one dated commit per day from Jan 1 through Aug 4, 2026"
+        required: true
+        default: false
+        type: boolean
+
+permissions:
+  contents: write
+
+concurrency:
+  group: daily-counter
+  cancel-in-progress: false
+
+jobs:
+  increment:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Configure Git identity
+        shell: bash
+        run: |
+          git config user.name "IManss-ai"
+          git config user.email "254088976+IManss-ai@users.noreply.github.com"
+
+      - name: Backfill 2026 counter history
+        if: ${{ github.event_name == 'workflow_dispatch' && inputs.backfill_2026 == true }}
+        shell: bash
+        run: |
+          python scripts/backfill_counter.py \
+            --start-date 2026-01-01 \
+            --end-date 2026-08-04
+          git push
+
+      - name: Increment daily counter
+        if: ${{ github.event_name != 'workflow_dispatch' || inputs.backfill_2026 != true }}
+        run: python scripts/update_counter.py
+
+      - name: Commit and push daily update
+        if: ${{ github.event_name != 'workflow_dispatch' || inputs.backfill_2026 != true }}
+        shell: bash
+        run: |
+          git add counter.txt
+
+          if git diff --cached --quiet; then
+            echo "No counter change to commit."
+            exit 0
+          fi
+
+          git commit -m "chore: update daily counter"
+          git push
