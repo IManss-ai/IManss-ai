@@ -106,6 +106,14 @@ def create_commit(day: date, sequence: int, counter_value: int, timestamp: str) 
     )
 
 
+def push_commits() -> None:
+    subprocess.run(
+        ["git", "-c", "pack.window=0", "-c", "pack.depth=0", "push"],
+        cwd=REPO_ROOT,
+        check=True,
+    )
+
+
 def main() -> None:
     parser = argparse.ArgumentParser(
         description="Create an idempotent, varied number of counter commits per day."
@@ -113,14 +121,18 @@ def main() -> None:
     parser.add_argument("--start-date", required=True, type=parse_date)
     parser.add_argument("--end-date", required=True, type=parse_date)
     parser.add_argument("--dry-run", action="store_true")
+    parser.add_argument("--push-every", type=int, default=0)
     arguments = parser.parse_args()
     if arguments.start_date > arguments.end_date:
         parser.error("--start-date must be on or before --end-date")
+    if arguments.push_every < 0:
+        parser.error("--push-every must be zero or greater")
 
     counts = existing_counts()
     counter_value = read_counter()
     current_day = arguments.start_date
     created = 0
+    unpushed = 0
 
     while current_day <= arguments.end_date:
         key = current_day.isoformat()
@@ -135,8 +147,15 @@ def main() -> None:
                 counter_value += 1
                 create_commit(current_day, sequence, counter_value, times[sequence - 1])
                 created += 1
+                unpushed += 1
+                if arguments.push_every and unpushed >= arguments.push_every:
+                    push_commits()
+                    unpushed = 0
 
         current_day += timedelta(days=1)
+
+    if not arguments.dry_run and arguments.push_every and unpushed:
+        push_commits()
 
     print(f"Varied activity complete: {created} commits created.")
 
