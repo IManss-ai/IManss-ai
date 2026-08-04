@@ -45,8 +45,8 @@ jobs:
         run: |
           python scripts/generate_activity.py \
             --start-date 2026-01-01 \
-            --end-date 2026-08-05
-          git push
+            --end-date 2026-08-05 \
+            --push-every 75
 
       - name: Create today's varied activity
         if: ${{ github.event_name != 'workflow_dispatch' || inputs.naturalize_2026 != true }}
@@ -55,5 +55,5 @@ jobs:
           TODAY=$(TZ=Asia/Qyzylorda date +%F)
           python scripts/generate_activity.py \
             --start-date "$TODAY" \
-            --end-date "$TODAY"
-          git push
+            --end-date "$TODAY" \
+            --push-every 75
