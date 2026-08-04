@@ -196,7 +196,9 @@ def main() -> None:
                     sequence,
                     counter_value,
                     times[sequence - 1],
-                    update_counter=sequence == target,
+                    update_counter=(
+                        current_day == arguments.end_date and sequence == target
+                    ),
                 )
                 created += 1
                 unpushed += 1
