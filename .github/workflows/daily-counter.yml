@@ -6,7 +6,7 @@ on:
   workflow_dispatch:
     inputs:
       naturalize_2026:
-        description: "Create varied activity from Jan 1 through Aug 5, 2026"
+        description: "Spread random brightness from Jan 1 through Aug 5, 2026"
         required: true
         default: false
         type: boolean
@@ -46,7 +46,7 @@ jobs:
           python scripts/generate_activity.py \
             --start-date 2026-01-01 \
             --end-date 2026-08-05 \
-            --push-every 75
+            --push-every 400
 
       - name: Create today's varied activity
         if: ${{ github.event_name != 'workflow_dispatch' || inputs.naturalize_2026 != true }}
@@ -56,4 +56,4 @@ jobs:
           python scripts/generate_activity.py \
             --start-date "$TODAY" \
             --end-date "$TODAY" \
-            --push-every 75
+            --push-every 400
