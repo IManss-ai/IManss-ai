@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 import argparse
+import calendar
 import hashlib
 import os
 import random
@@ -16,6 +17,9 @@ ORIGINAL_PATTERN = re.compile(
 )
 VARIED_PATTERN = re.compile(
     r"^chore: activity counter \((\d{4}-\d{2}-\d{2}) #\d+\)$"
+)
+INTENSITY_PATTERN = re.compile(
+    r"^chore: activity intensity \((\d{4}-\d{2}-\d{2}) #\d+\)$"
 )
 
 
@@ -38,21 +42,48 @@ def read_counter() -> int:
 
 
 def day_rng(day: date) -> random.Random:
-    digest = hashlib.sha256(f"IManss-ai-activity-v1:{day.isoformat()}".encode()).digest()
+    digest = hashlib.sha256(f"IManss-ai-activity-v2:{day.isoformat()}".encode()).digest()
     return random.Random(int.from_bytes(digest[:8], "big"))
+
+
+def monthly_bright_days(day: date) -> set[int]:
+    digest = hashlib.sha256(
+        f"IManss-ai-bright-v2:{day.year:04d}-{day.month:02d}".encode()
+    ).digest()
+    rng = random.Random(int.from_bytes(digest[:8], "big"))
+    last_day = calendar.monthrange(day.year, day.month)[1]
+    windows = ((1, 5), (8, 13), (16, 21), (24, min(28, last_day)))
+    return {rng.randint(start, end) for start, end in windows}
 
 
 def target_for_day(day: date) -> int:
     rng = day_rng(day)
     if day.weekday() >= 5:
-        target = rng.choices([1, 2, 3, 4, 5], weights=[24, 32, 24, 14, 6])[0]
-    else:
-        target = rng.choices(
-            [2, 3, 4, 5, 6, 7, 8, 10],
-            weights=[6, 12, 18, 21, 18, 13, 8, 4],
+        bucket = rng.choices(
+            ["low", "medium", "high", "bright"],
+            weights=[50, 34, 12, 4],
         )[0]
-        if rng.random() < 0.08:
-            target += rng.randint(4, 8)
+        ranges = {
+            "low": (6, 18),
+            "medium": (19, 34),
+            "high": (35, 60),
+            "bright": (70, 95),
+        }
+    else:
+        bucket = rng.choices(
+            ["low", "medium", "high", "bright"],
+            weights=[25, 42, 25, 8],
+        )[0]
+        ranges = {
+            "low": (12, 25),
+            "medium": (26, 45),
+            "high": (46, 70),
+            "bright": (80, 105),
+        }
+
+    target = rng.randint(*ranges[bucket])
+    if day.day in monthly_bright_days(day):
+        target = max(target, rng.randint(88, 112))
     return target
 
 
@@ -78,28 +109,43 @@ def existing_counts() -> Counter[str]:
         _, separator, subject = line.partition("\x00")
         if not separator:
             continue
-        match = ORIGINAL_PATTERN.fullmatch(subject) or VARIED_PATTERN.fullmatch(subject)
+        match = (
+            ORIGINAL_PATTERN.fullmatch(subject)
+            or VARIED_PATTERN.fullmatch(subject)
+            or INTENSITY_PATTERN.fullmatch(subject)
+        )
         if match:
             counts[match.group(1)] += 1
     return counts
 
 
-def create_commit(day: date, sequence: int, counter_value: int, timestamp: str) -> None:
-    COUNTER_FILE.write_text(f"{counter_value}\n", encoding="utf-8")
-    relative_path = COUNTER_FILE.relative_to(REPO_ROOT).as_posix()
-    subprocess.run(["git", "add", relative_path], cwd=REPO_ROOT, check=True)
+def create_commit(
+    day: date,
+    sequence: int,
+    counter_value: int,
+    timestamp: str,
+    update_counter: bool,
+) -> None:
     environment = {
         **os.environ,
         "GIT_AUTHOR_DATE": timestamp,
         "GIT_COMMITTER_DATE": timestamp,
     }
-    subprocess.run(
+    command = ["git", "commit"]
+    if update_counter:
+        COUNTER_FILE.write_text(f"{counter_value}\n", encoding="utf-8")
+        relative_path = COUNTER_FILE.relative_to(REPO_ROOT).as_posix()
+        subprocess.run(["git", "add", relative_path], cwd=REPO_ROOT, check=True)
+    else:
+        command.append("--allow-empty")
+    command.extend(
         [
-            "git",
-            "commit",
             "-m",
-            f"chore: activity counter ({day.isoformat()} #{sequence:02d})",
-        ],
+            f"chore: activity intensity ({day.isoformat()} #{sequence:03d})",
+        ]
+    )
+    subprocess.run(
+        command,
         cwd=REPO_ROOT,
         env=environment,
         check=True,
@@ -116,7 +162,7 @@ def push_commits() -> None:
 
 def main() -> None:
     parser = argparse.ArgumentParser(
-        description="Create an idempotent, varied number of counter commits per day."
+        description="Create an idempotent mix of low, medium, and bright activity days."
     )
     parser.add_argument("--start-date", required=True, type=parse_date)
     parser.add_argument("--end-date", required=True, type=parse_date)
@@ -129,7 +175,7 @@ def main() -> None:
         parser.error("--push-every must be zero or greater")
 
     counts = existing_counts()
-    counter_value = read_counter()
+    counter_value = max(read_counter(), sum(counts.values()))
     current_day = arguments.start_date
     created = 0
     unpushed = 0
@@ -145,7 +191,13 @@ def main() -> None:
             times = commit_times(current_day, target)
             for sequence in range(present + 1, target + 1):
                 counter_value += 1
-                create_commit(current_day, sequence, counter_value, times[sequence - 1])
+                create_commit(
+                    current_day,
+                    sequence,
+                    counter_value,
+                    times[sequence - 1],
+                    update_counter=sequence == target,
+                )
                 created += 1
                 unpushed += 1
                 if arguments.push_every and unpushed >= arguments.push_every:
